@@ -1,0 +1,85 @@
+<div class="container">
+    
+    <h1 class="text-center">To-Do List</h1>
+    
+    <div class="optionBar">        
+        <button id="btnSorting" ng-click="sortOptions()" class="btn btn-default">Sorting options</button>
+    </div>
+    
+    <div ng-show="showOptions" class="optionBar">
+        <form class="form-inline" id="frmSort">
+            <div class="form-group">
+                <label for="cboSort">Sort by:</label>
+                <select selected="" class="form-control" id="cboSort" ng-model="sortOption">
+                    <option value="">Select criteria</option>
+                    <option value="date">Date</option>
+                    <option value="type">Type</option>
+                    <option value="description">Name</option>
+                </select>
+                <button ng-disabled="sortOption==''" class="btn btn-primary" id="btnSortOrder" ng-click="sortOrder()">DES</button>
+            </div>
+            <div class="form-group">
+                <label for="txtFilter">Filter by:</label>
+                <input type="text" class="form-control" id="txtFilter" ng-model="filterText"/>
+            </div>
+        </form>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+			<div ng-repeat="item in items | orderBy:sortOption:reverse | filter:filterText" item-switch item="item" item-index="$index" item="item" class="notice notice-{{classMap[item.type]}}">
+			</div>
+		</div>
+	</div>
+    
+    <div class="optionBar">
+        <button id="btnCreating" class="btn btn-default" ng-click="setAddition()">Add item</button>
+        <button id="btnCategory" class="btn btn-default" ng-click="showCategories()">Add category</button>
+    </div>
+    
+    <div ng-show="showCreate" class="optionBar">
+        <form class="form-inline" name="taskForm" ng-submit="taskForm.$valid ? ((creating) ? addItem() : updateItem()) : showError()" novalidate>            
+            
+            <div class="form-group">
+                <label for="cboType">Type:</label>                
+                <select selected="" class="form-control" id="cboType" ng-model="item.type"
+                        ng-options="item as item for item in itemType" required>
+                    <option value="">Select a type</option>
+                </select>                
+            </div>
+            <div class="form-group">
+               <label class='col-sm-2' for="datetimepicker">Date:</label>
+                <div class='col-sm-2'>
+                    <input type='text' class="form-control" id='datetimepicker' placeholder="Click to select a date" required/>
+                </div>       
+            </div>
+            <div class="form-group">
+                <label  for="txtValue">Description:</label>                
+                <input class="form-control" type="text" id="txtValue" ng-model="item.description" required/>
+            </div>
+
+            <button class="btn btn-default hidden" id="btnAdd" type="submit">Add</button>
+            <button class="btn btn-default hidden" id="btnUpdate" type="submit">Update</button>
+            
+        </form>
+    </div>
+    
+    <div ng-show="showCategory" class="optionBar">
+        <form class="form-inline" name="categoryForm" ng-submit="categoryForm.$valid ? addCategory(category) : showError()" novalidate>
+            <div class="form-group">
+                <label for="txtCategory">Name:</label>
+                <input class="form-control" type="text" id="txtCategory" ng-model="category" required>
+                <label for="colorPicker">Color:</label>
+                <input id="colorPicker" type="text" class="form-control" value="" placeholder="Click to select a color" required/>
+            </div>
+            <button class="btn btn-default" id="btnAddCategory" type="submit">Add</button>
+        </form>       
+    </div>
+    <h4>Progress percentage</h4>
+    <div ng-repeat="percent in completed">
+        <p><small class="text-muted">{{percent.type}} : {{percent.percentage}}%</small></p>
+    </div>
+    
+    <br>
+    <a href="../#/view-about">About</a>
+</div>

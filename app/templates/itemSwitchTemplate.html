@@ -1,0 +1,11 @@
+<strong class="col-xs-2">{{item.type}}</strong> <span class="col-xs-2">{{item.date | date:dd/MM/YYYY}}</span> <span>{{item.description}}</span> 
+<div class="material-switch pull-right">
+	<input ng-model="item.isDone" 
+		id="someSwitchOptionDefault{{itemIndex}}" 
+		name="someSwitchOption001{{itemIndex}}" 
+		type="checkbox"
+        ng-change="categoryPercentage(item)"/> 
+		<label for="someSwitchOptionDefault{{itemIndex}}" class="label-info"></label>
+    <button id="icon" class="btn btn-xs glyphicon glyphicon-pencil" ng-click="edit(item,itemIndex)" aria-hidden="true"></button>
+    <button id="icon" class="btn btn-xs glyphicon glyphicon-trash" ng-click="delete(itemIndex)" aria-hidden="true"></button>
+</div>
